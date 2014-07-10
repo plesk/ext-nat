@@ -20,21 +20,20 @@ class IndexController extends pm_Controller_Action
     public function updateAddressAction()
     {
         $ips = Modules_Nat_NatManager::getIpAddresses();
-        // TODO: add validation
         $mainIp = $this->_request->getParam('ip');
+
+        if (!isset($ips[$mainIp])) {
+            $this->_redirect('index');
+        }
+
         $publicIp = $ips[$mainIp];
 
         $this->view->pageTitle = $this->lmsg('updateAddressPageTitle');
 
         $form = new pm_Form_Simple();
-        $form->addElement('text', 'mainIp', array(
+        $form->addElement('simpleText', 'mainIpText', array(
             'label' => $this->lmsg('mainIp'),
             'value' => $mainIp,
-            'required' => true,
-            'validators' => array(
-                array('NotEmpty', true),
-                array('Ip', true),
-            ),
         ));
         $form->addElement('text', 'publicIp', array(
             'label' => $this->lmsg('publicIp'),
@@ -44,6 +43,9 @@ class IndexController extends pm_Controller_Action
                 array('NotEmpty', true),
                 array('Ip', true),
             ),
+        ));
+        $form->addElement('hidden', 'mainIp', array(
+            'value' => $mainIp,
         ));
         $form->addControlButtons(array(
             'cancelLink' => pm_Context::getBaseUrl(),

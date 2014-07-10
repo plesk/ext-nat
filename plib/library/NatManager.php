@@ -16,6 +16,12 @@ class Modules_Nat_NatManager
 
     public static function updateAddress($mainIp, $publicIp)
     {
+        $ips = self::getIpAddresses();
+
+        if (!isset($ips[$mainIp])) {
+            throw new pm_Exception('Unknown IP address.');
+        }
+
         $apiResponse = pm_ApiRpc::getService()->call(
             '<ip>' . 
                 '<set>' . 
@@ -24,7 +30,9 @@ class Modules_Nat_NatManager
                 '</set>' .
             '</ip>');
 
-        // TODO: add error handler
+        if ('error' === (string)$apiResponse->ip->set->result->status) {
+            throw new pm_Exception($apiResponse->ip->set->result->errtext);
+        }
     }
 
 }
