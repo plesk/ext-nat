@@ -38,9 +38,7 @@ class IndexController extends pm_Controller_Action
         $form->addElement('text', 'publicIp', array(
             'label' => $this->lmsg('publicIp'),
             'value' => $publicIp,
-            'required' => true,
             'validators' => array(
-                array('NotEmpty', true),
                 array('Ip', true),
             ),
         ));
@@ -52,7 +50,11 @@ class IndexController extends pm_Controller_Action
         ));
 
         if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
-            Modules_Nat_NatManager::updateAddress($form->getValue('mainIp'), $form->getValue('publicIp'));
+            $newPublicIp = $form->getValue('publicIp');
+            if ('' === $newPublicIp) {
+                $newPublicIp = '0';
+            }
+            Modules_Nat_NatManager::updateAddress($form->getValue('mainIp'), $newPublicIp);
 
             $this->_status->addMessage('info', $this->lmsg('ipUpdated'));
             $this->_helper->json(array('redirect' => pm_Context::getBaseUrl()));
