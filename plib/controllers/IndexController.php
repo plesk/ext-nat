@@ -29,6 +29,7 @@ class IndexController extends pm_Controller_Action
         $publicIp = $ips[$mainIp];
 
         $this->view->pageTitle = $this->lmsg('updateAddressPageTitle');
+        $this->view->uplevelLink = pm_Context::getBaseUrl();
 
         $form = new pm_Form_Simple();
         $form->addElement('simpleText', 'mainIpText', array(
