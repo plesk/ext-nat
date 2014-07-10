@@ -3,9 +3,12 @@
 class IndexController extends pm_Controller_Action
 {
 
+    protected $_accessLevel = 'admin';
+
     public function indexAction()
     {
         $this->view->pageTitle = $this->lmsg('indexPageTitle');
+        $this->view->pageHint = $this->lmsg('indexPageHint');
         $this->view->list = $this->_getIpsList();
     }
 
@@ -23,19 +26,24 @@ class IndexController extends pm_Controller_Action
 
         $this->view->pageTitle = $this->lmsg('updateAddressPageTitle');
 
-        // TODO: add localization
         $form = new pm_Form_Simple();
         $form->addElement('text', 'mainIp', array(
-            'label' => 'Main (or private IP)',
+            'label' => $this->lmsg('mainIp'),
             'value' => $mainIp,
             'required' => true,
             'validators' => array(
                 array('NotEmpty', true),
+                array('Ip', true),
             ),
         ));
         $form->addElement('text', 'publicIp', array(
-            'label' => 'Public IP',
+            'label' => $this->lmsg('publicIp'),
             'value' => $publicIp,
+            'required' => true,
+            'validators' => array(
+                array('NotEmpty', true),
+                array('Ip', true),
+            ),
         ));
         $form->addControlButtons(array(
             'cancelLink' => pm_Context::getBaseUrl(),
@@ -44,7 +52,7 @@ class IndexController extends pm_Controller_Action
         if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
             Modules_Nat_NatManager::updateAddress($form->getValue('mainIp'), $form->getValue('publicIp'));
 
-            $this->_status->addMessage('info', 'IP address was successfully updated.');
+            $this->_status->addMessage('info', $this->lmsg('ipUpdated'));
             $this->_helper->json(array('redirect' => pm_Context::getBaseUrl()));
         }
 
@@ -66,11 +74,11 @@ class IndexController extends pm_Controller_Action
         $list->setData($data);
         $list->setColumns(array(
             'column-1' => array(
-                'title' => 'Main (or private IP)',
+                'title' => $this->lmsg('mainIp'),
                 'noEscape' => true,
             ),
             'column-2' => array(
-                'title' => 'Public IP',
+                'title' => $this->lmsg('publicIp'),
             ),
         ));
         $list->setDataUrl(array('action' => 'list-data'));
