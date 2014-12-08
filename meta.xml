@@ -5,7 +5,7 @@
   <name>NAT Manager</name>
   <description>Plugin provides an ability to manage public/private IP addresses for proper working behind NAT.</description>
   <version>1.0</version>
-  <release>2</release>
-  <vendor>Parallels, Inc.</vendor>
+  <release>3</release>
+  <vendor>Parallels</vendor>
   <plesk_min_version>12.0.18</plesk_min_version>
 </module>
