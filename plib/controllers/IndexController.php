@@ -86,7 +86,7 @@ class IndexController extends pm_Controller_Action
                 'title' => $this->lmsg('publicIp'),
             ),
         ));
-        $list->setDataUrl(array('action' => 'list-data'));
+        $list->setDataUrl(array('action' => 'index-data'));
 
         return $list;
     }
