@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2015. Parallels IP Holdings GmbH. All Rights Reserved.
+// Copyright 1999-2016. Parallels IP Holdings GmbH. All Rights Reserved.
 $messages = array(
     'indexPageTitle' => 'NAT Manager',
     'indexPageHint' => 'Select IP address and define public to private IP translation. In order to propagate changes to DNS zones of existing domains need to sync these zones with DNS zone template.',
