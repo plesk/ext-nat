@@ -4,7 +4,7 @@
   <id>nat</id>
   <name>NAT Manager</name>
   <description>Plugin provides an ability to manage public/private IP addresses for proper working behind NAT.</description>
-  <url>https://www.plesk.com</url>
+  <url>https://github.com/plesk/ext-nat</url>
   <version>1.1</version>
   <release>5</release>
   <vendor>Plesk</vendor>
